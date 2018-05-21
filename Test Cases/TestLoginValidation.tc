@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>Verify Validation for invalid Login input</description>
+   <name>TestLoginValidation</name>
+   <tag>BlankLogin</tag>
+   <comment></comment>
+   <testCaseGuid>07b3f47c-cce4-4197-8ec2-2186f6fbea44</testCaseGuid>
+</TestCaseEntity>
