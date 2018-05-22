@@ -26,27 +26,71 @@ WebUI.navigateToUrl('http://automationpractice.com/index.php')
 
 WebUI.click(findTestObject('Page_My Store/a_Sign in'))
 
-WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
+//WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_An email address required.'), 'An email address required.')
+println 'TestCase Started'
+for (def row = 1; row <= findTestData('LoginTestsData').getRowNumbers(); row++) {
+    rowname = findTestData('LoginTestsData').getValue('TestCaseName', row)
+	println ('TestCasename' +rowname)
+    if (rowname.equalsIgnoreCase('Test_Blank_Login')) {
+		if((findTestData('LoginTestsData').getValue('Email',row)) != ''){
+        	WebUI.setText(findTestObject('Page_Login - My Store/input_email'), findTestData('LoginTestsData').getValue('Email', 
+                row))
+		}
 
-WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_An email address required.'), 'An email address required.')
+       // WebUI.setText(findTestObject('Page_Login - My Store/input_password'), findTestData('LoginTestsData').getValue('Password',row))
+		WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
+        WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_An email address required.'), 'An email address required.')
+    
+    }
+    
+    if (rowname.equalsIgnoreCase('Test_Blank_Pwd')) {
+        WebUI.setText(findTestObject('Page_Login - My Store/input_email'), findTestData('LoginTestsData').getValue('Email', 
+                row))
+		
+		if((findTestData('LoginTestsData').getValue('Password',row)) != ''){
+        WebUI.setText(findTestObject('Page_Login - My Store/input_password'), findTestData('LoginTestsData').getValue('Password', 
+                row))
+		}
 
-WebUI.setText(findTestObject('Page_Login - My Store/input_email'), 'test')
+		WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
+        WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Password is required.'), 'Password is required.')
 
-WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
+    }
+    
+    if (rowname.equalsIgnoreCase('Test_InValid_Email')) {
+        WebUI.setText(findTestObject('Page_Login - My Store/input_email'), findTestData('LoginTestsData').getValue('Email', 
+                row))
 
-WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Invalid email address.'), 'Invalid email address.')
+        WebUI.setText(findTestObject('Page_Login - My Store/input_password'), findTestData('LoginTestsData').getValue('Password', 
+                row))
 
-WebUI.setText(findTestObject('Page_Login - My Store/input_email'), 'test@test.com')
+        WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
 
-WebUI.doubleClick(findTestObject('Page_Login - My Store/span_Sign in'))
+        WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Invalid email address.'), 'Invalid email address.')
+    }
+    
+    if (rowname.equalsIgnoreCase('Test_InValid_Login')) {
+        WebUI.setText(findTestObject('Page_Login - My Store/input_email'), findTestData('LoginTestsData').getValue('Email', 
+                row))
 
-WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Password is required.'), 'Password is required.')
+        WebUI.setText(findTestObject('Page_Login - My Store/input_password'), findTestData('LoginTestsData').getValue('Password', 
+                row))
 
-WebUI.setText(findTestObject('Page_Login - My Store/input_passwd'), 'tes123')
+        WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
 
-WebUI.click(findTestObject('Page_Login - My Store/span_Sign in'))
+        WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Authentication failed.'), 'Authentication failed.')
+    }
+    
+    if (rowname.equalsIgnoreCase('Test_Valid_Login')) {
+        WebUI.setText(findTestObject('Page_Login - My Store/input_email'), findTestData('LoginTestsData').getValue('Email', 
+                row))
 
-WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Authentication failed.'), 'Authentication failed.')
+        WebUI.setText(findTestObject('Page_Login - My Store/input_password'), findTestData('LoginTestsData').getValue('Password', 
+                row))
 
-WebUI.closeBrowser()
+        WebUI.click(findTestObject('Page_Login - My Store/span_Sign in')) //WebUI.verifyElementText(findTestObject('Page_Login - My Store/li_Authentication failed.'), 'Authentication failed.')
+    }
+}
+    WebUI.closeBrowser()
+
 
